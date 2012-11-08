@@ -1,0 +1,33 @@
+
+Warning: aggressive caching is in place, which means resulting images may have
+stale packages. Use `lb clean` to clear caches.
+
+### Build Requirements
+
+Only tested on a debian wheezy host with many development packages already
+installed; YMMV.
+
+Install live-build and qemu:
+
+    sudo apt-get install qemu-user-static qemu-utils debootstrap live-build
+
+You need a recent version of live-build because of a secring.gpg-related error
+(see http://lists.debian.org/debian-live/2012/07/msg00122.html); download the
+sid package (from http://packages.debian.org/sid/live-build) and install:
+
+    sudo dpkg -i live-build_3.0~a67-1_all.deb
+
+You might also want the Debian Live manuals:
+
+    sudo apt-get install live-manual-html
+
+### Build an Image
+
+Once the above build requirements are satisfied:
+
+    lb config
+    lb build
+
+### Develop
+
+Basic configuration options are in ./auto/config

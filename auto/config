@@ -1,0 +1,19 @@
+#!/bin/sh
+
+lb config noauto \
+    --architecture armel \
+    --linux-flavours kirkwood \
+    --apt-secure true \
+    --binary-images hdd \
+    --cache true \
+    --cache-indices true \
+    --cache-packages true \
+    --cache-stages rootfs \
+    --distribution wheezy \
+    --parent-distribution wheezy \
+    --binary-filesystem ext3 \
+    --security true \
+    --debian-installer-gui false \
+    --bootstrap-qemu-arch armel \
+    --bootstrap-qemu-static /usr/bin/qemu-arm-static \
+    "${@}"
