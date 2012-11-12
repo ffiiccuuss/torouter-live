@@ -1,7 +1,7 @@
 #!/bin/sh
 
 lb config noauto \
-    --architecture armel \
+    --architectures armel \
     --linux-flavours kirkwood \
     --apt-secure true \
     --binary-images hdd \
@@ -12,6 +12,7 @@ lb config noauto \
     --distribution wheezy \
     --parent-distribution wheezy \
     --binary-filesystem ext3 \
+    --chroot-filesystem none \
     --security true \
     --debian-installer-gui false \
     --bootstrap-qemu-arch armel \

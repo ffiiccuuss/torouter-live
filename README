@@ -14,6 +14,7 @@ Install live-build and qemu:
 You need a recent version of live-build because of a secring.gpg-related error
 (see http://lists.debian.org/debian-live/2012/07/msg00122.html); download the
 sid package (from http://packages.debian.org/sid/live-build) and install:
+(or, from http://live.debian.net/debian/ ?)
 
     sudo dpkg -i live-build_3.0~a67-1_all.deb
 
