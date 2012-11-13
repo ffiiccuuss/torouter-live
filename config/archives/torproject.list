@@ -1,0 +1,3 @@
+deb [arch=armel] http://deb.torproject.org/torproject.org/ wheezy main
+deb-src http://deb.torproject.org/torproject.org/ wheezy main
+

@@ -17,4 +17,6 @@ lb config noauto \
     --debian-installer-gui false \
     --bootstrap-qemu-arch armel \
     --bootstrap-qemu-static /usr/bin/qemu-arm-static \
+    --keyring-packages "debian-archive-keyring deb.torproject.org-keyring" \
+    --bootappend-live "boot=live config username=torouter" \
     "${@}"

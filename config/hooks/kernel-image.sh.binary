@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+echo "Mangling kernel..."
+cd ./binary
+mkdir initrd-repack
+cp live/initrd.img-* initrd-repack
+(cd initrd-repack ; \
+    zcat initrd.img-* | cpio -i ; \
+    rm -f conf/param.conf ; \
+    find . | cpio --quiet -o -H newc | \
+    gzip -9 > initrd.img ; \
+    cd ..)
+
+cp initrd-repack/initrd.img live/initrd.img
+rm -rf initrd-repack
+
+(cd live; \
+    cp ../usr/lib/linux-image-*/kirkwood-dreamplug.dtb dtb ; \
+    cat vmlinuz-* dtb >> temp-kernel ; \
+    mkimage -A arm -O linux -T kernel -n "Debian kernel (unknown version)" \
+    -C none -a 0x8000 -e 0x8000 -d temp-kernel uImage ; \
+    rm -f temp-kernel ; \
+    mkimage -A arm -O linux -T ramdisk -C gzip -a 0x0 -e 0x0 \
+    -n "Debian ramdisk (unknown version)" \
+    -d initrd.img uInitrd )

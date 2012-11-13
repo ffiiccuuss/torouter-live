@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+# TODO: this seems to be a null-op... flash-kernel is symlinked to `true`?
+echo "Trying to flashing kernel..."
+/usr/sbin/flash-kernel || echo "Failed to flash kernel! Don't worry, will mangle"
+
+echo "Mangling kernel..."
+mkdir /tmp/initrd-repack
+(cd /tmp/initrd-repack ; \
+    zcat /boot/initrd.img-* | cpio -i ; \
+    rm -f conf/param.conf ; \
+    find . | cpio --quiet -o -H newc | \
+    gzip -9 > /boot/initrd.img)
+rm -rf /tmp/initrd-repack
+
+(cd /boot ; \
+    cp /usr/lib/linux-image-*/kirkwood-dreamplug.dtb dtb ; \
+    cat vmlinuz-* dtb >> temp-kernel ; \
+    mkimage -A arm -O linux -T kernel -n "Debian kernel (unknown version)" \
+    -C none -a 0x8000 -e 0x8000 -d temp-kernel uImage ; \
+    rm -f temp-kernel ; \
+    mkimage -A arm -O linux -T ramdisk -C gzip -a 0x0 -e 0x0 \
+    -n "Debian ramdisk (unknown version)" \
+    -d initrd.img uInitrd )
