@@ -30,10 +30,8 @@ uaputl
 uapevent
 dnsmasq
 iptables
-vim-nox
 less
 screen
-lsof
 tcptraceroute
 traceroute
 mtr-tiny
