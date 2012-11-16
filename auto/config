@@ -1,6 +1,7 @@
 #!/bin/sh
 
 lb config noauto \
+    --distribution "torouter" \
     --architectures armel \
     --linux-flavours kirkwood \
     --apt-secure true \
@@ -8,6 +9,8 @@ lb config noauto \
     --cache true \
     --cache-indices true \
     --cache-packages true \
+    --parent-mirror-bootstrap http://http.debian.net/debian \
+    --mirror-bootstrap http://http.debian.net/debian \
     --cache-stages rootfs \
     --distribution wheezy \
     --parent-distribution wheezy \
@@ -20,3 +23,7 @@ lb config noauto \
     --keyring-packages "debian-archive-keyring deb.torproject.org-keyring" \
     --bootappend-live "boot=live config username=torouter" \
     "${@}"
+
+# Note: chroot filesystem should be 'squashfs' for final images, 'none' for
+# development
+# Note: bootappend-live options are ignored when booting from u-boot
