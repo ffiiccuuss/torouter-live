@@ -1,0 +1,20 @@
+
+Recent versions of live-config have a bug relating to automatic serial console
+logins (eg, on /dev/ttyS0). These affect headless systems like torouter.
+
+Previously, a "live-getty" boot flag was sufficient to enable such logins. At
+some point this broke, and now even custom versions of /etc/inittab which
+enable regular logins get mangled by the live-config script '0170-sysvinit'.
+
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=602788
+
+http://live.debian.net/gitweb/?p=live-config.git;a=blob;f=docs/README;h=8059e3d8d2be6616d30f9e695472d4992387f7d2;hb=HEAD
+
+As a work-around, the bundled /etc/inittab and script 9999-serial_console
+combined de-mangle the 0170-sysvinit changes and enable an automatic user login
+on /dev/ttySO after system boot.
+
+See also:
+
+config/includes.chroot/etc/inittab
+config/includes.chroot/lib/live/config/9999-serial_console
