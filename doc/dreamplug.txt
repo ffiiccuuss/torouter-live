@@ -1,0 +1,18 @@
+
+# u-boot Configuration
+
+You need a recent version of u-boot; search the internet for install/flash
+instructions.
+
+Use the following boot arguments:
+
+    set x_bootcmd_kernel ext2load usb 1:1 0x6400000 live/uImage
+    set x_bootcmd_initrd ext2load usb 1:1 0x6900000 live/uInitrd
+    set x_bootargs_root root=/dev/sdb1 rootdelay=4
+    set x_bootargs console=ttyS0,115200 boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot
+
+# Links
+
+Random notes on the DreamPlug:
+http://www.madore.org/~david/linux/dreamplug.html
+

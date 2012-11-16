@@ -1,0 +1,55 @@
+
+Always use the unstable version of live-build in your host build machine. At
+the time of writing this means version 3.0~a67-1. You can grab the one-off .deb
+here:
+
+    http://packages.debian.org/sid/live-build
+
+### Errors when building flat ("plain") filesystem images
+
+When building a chroot-filesystem=none image, if you encounter:
+
+    cp: cannot create regular file `binary/live/filesystem.packages': No such file or directory
+
+You will need to:
+
+    mkdir binary/live
+    rm -rf cache/binary_rootfs
+
+If you don't run the second line as well, you will get the error:
+
+    cp: cannot stat `cache/binary_rootfs/filesystem.*': No such file or directory
+
+### mksquashfs Segfaults in qemu
+
+mksquashfs always segfaults when run inside of qemu. Perhaps due to large
+memory requirements of mksquashfs?
+
+One hack workaround is to install the squashfs-tools in the host build system,
+then edit the file /usr/lib/live/build/binary_rootfs and around line 377
+comment out:
+
+    Chroot chroot "mksquashfs chroot filesystem.squashfs ${MKSQUASHFS_OPTIONS}"
+
+and insert:
+
+    cd chroot
+    mksquashfs chroot filesystem.squashfs ${MKSQUASHFS_OPTIONS}
+    cd ..
+
+Previously tried adding the following mksquashfs arguments, but they didn't fix
+the problem:
+
+    export MKSQUASHFS_OPTIONS="-processors 1 -read-queue 8 -write-queue 16 -fragment-queue 8"
+
+### squashfs image too small
+
+The Calculate_partition_size function seems to be too optimistic; sometimes
+images will not fit in the generated partitions.
+
+Add the following below line 132 of /usr/lib/live/build/binary_hdd in your host
+environment to add an extra 50MB to the partition size (probably way more than
+necessary):
+
+    DU_DIM="$(echo 50 + $DU_DIM | bc)"
+

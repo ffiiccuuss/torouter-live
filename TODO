@@ -1,0 +1,9 @@
+- add vim-nox and lsof back into package lists
+- keyring stuff: config/archives/any-repo.key.{binary,chroot}
+- copy in torouterui package, add dependancies
+- custom kernel
+    http://live.debian.net/manual/html/live-manual.en.html#411
+- determine which configurations can be settled using debconf preseeds
+    http://live.debian.net/manual/html/live-manual.en.html#495
+- set user password
+    http://live.debian.net/manual/html/live-manual.en.html#505
