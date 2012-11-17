@@ -1,5 +1,74 @@
 
-# u-boot Configuration
+Kernel and initrd Images
+---------------------------
+The bootloader running on the DreamPlug (u-boot) expects raw, uncompressed
+kernel and initrd images, usually named uImage and uInitrd. The appropriate
+device tree file (dtb) must also be overlaid on the kernel to boot
+successfully.
+
+By default Debian (and the Debian Live build process) generates compressed
+images, eg initrd.img-3.2.0-4-kirkwood and vmlinuz-3.2.0-4-kirkwood.
+
+The scripts ./config/hooks/kernel-image.sh.chroot and
+./config/hooks/kernel-image.sh.binary repack the image files and copy them over
+to the /live directory in the final binary filesystem.
+
+
+DreamPlug u-Boot Overview
+---------------------------
+
+Many factory-configured DreamPlugs need their internal u-boot firmware updated
+and re-configured to boot from the external SD card. 
+
+You may want to remove the internal microSD card for the sake of simplicity.
+This will result in u-boot and linux boot warnings (eg, media not ready), but
+these can be ignored.
+
+The desired u-boot configuration is: 
+
+    x_bootcmd_usb 'usb start'
+    baudrate 115200
+    bootcmd '${x_bootcmd_usb}; ${x_bootcmd_kernel}; ${x_bootcmd_initrd}; setenv bootargs ${x_bootargs} ${x_bootargs_root} ${x_bootargs_console}; bootm 0x6400000 0x6900000;'
+    x_bootcmd_kernel ext2load usb 1:1 0x6400000 live/uImage
+    x_bootcmd_initrd ext2load usb 1:1 0x6900000 live/uInitrd
+    x_bootargs_root root=/dev/sdb1 rootdelay=4
+    x_bootargs console=ttyS0,115200 boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot
+
+
+HOWTO: flash and configure u-boot
+-----------------------------------
+
+The default SD card images include the u-boot firmware required to boot from
+the card. Insert a flashed SD card into the DreamPlug and connect with screen:
+
+    $ screen /dev/ttyUSB0 115200
+
+Power up the DreamPlug and quickly press enter in the screen session to
+interrupt boot. Then enter the following commands into the running u-boot
+session (change the last argument of the 'sf write' line, in hex, if the .kwb
+file size changes from exactly 196076 bytes):
+
+    usb start
+    fatload usb 1 0x6400000 uboot.2012.04.01-2_armel.kwb
+    sf probe 0
+    sf erase 0x0 0x80000
+    sf write 0x6400000 0x0 0x2fdec
+    setenv baudrate 115200
+    setenv bootcmd '${x_bootcmd_usb}; ${x_bootcmd_kernel}; ${x_bootcmd_initrd}; setenv bootargs ${x_bootargs} ${x_bootargs_root} ${x_bootargs_console}; bootm 0x6400000 0x6900000;'
+    setenv x_bootcmd_usb 'usb start'
+    setenv x_bootcmd_kernel ext2load usb 1:1 0x6400000 live/uImage
+    setenv x_bootcmd_initrd ext2load usb 1:1 0x6900000 live/uInitrd
+    setenv x_bootargs_root root=/dev/sdb1 rootdelay=4
+    setenv x_bootargs console=ttyS0,115200 boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot
+    saveenv
+    reset
+
+NOTE: it's possible the above directions are out of date and need to be
+refreshed
+
+
+u-boot Configuration
+----------------------
 
 You need a recent version of u-boot; search the internet for install/flash
 instructions.
@@ -11,7 +80,11 @@ Use the following boot arguments:
     set x_bootargs_root root=/dev/sdb1 rootdelay=4
     set x_bootargs console=ttyS0,115200 boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot
 
-# Links
+
+Background Info, Links
+--------------------------
+
+See the DreamPlug.jpg photo in this folder.
 
 Random notes on the DreamPlug:
 http://www.madore.org/~david/linux/dreamplug.html

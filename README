@@ -1,6 +1,21 @@
 
-Warning: aggressive caching is in place, which means resulting images may have
-stale packages. Use `lb clean` to clear caches.
+### DISCLAIMER
+
+Multiple layers of scary disclaimer! Oh my!
+
+   !!! This repo is hackish, under development and will probably not even build
+   !!! or "work"!
+
+   !!! torouter is not on official Tor Foundation project!
+
+   !!! the torouter CONCEPT has not been clarified or reviewed!
+
+   !!! this torouter IMPLEMENTATION is undocumented, unspeced, and full of
+   !!! bugs. do not use it!
+
+   !!! torouter has not (yet) been developed by a security expert! 
+
+   !!! torouter will not (yet) protect your anonymity in any way!
 
 ### Build Requirements
 
@@ -23,6 +38,9 @@ You might also want the Debian Live manuals:
     sudo apt-get install live-manual-html
 
 ### Build an Image
+
+Warning: aggressive caching is in place, which means resulting images may have
+stale packages. Use `lb clean` to clear caches.
 
 Once the above build requirements are satisfied:
 

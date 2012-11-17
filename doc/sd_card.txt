@@ -1,0 +1,42 @@
+
+torouter is intended to boot and run from an SD. It could theoretically also
+run from an internal microSD card, a USB stick, or an eSATA drive, but
+specifying use of the SD card makes support, development, and documentation
+easier. The SD card can easily be popped out of the router and reflashed with a
+new image.
+
+The SD card should be at least 2GB in size and support reasonable read/write
+speeds, so probably a "class 6" quality card.
+
+You really should get a decent card: there can be an order of magnitude
+difference in performance between a cheap card and a fast card. 
+
+A quick (but inconclusive?) way to check read and write card performance on a
+high-performance machine: 
+
+    $ # unmount the card for read test
+    $ hdparm -t /dev/sdb    # iff /dev/sdb is the card
+    $ # mount the card for write test
+    $ dd count=10 bs=1M if=/dev/urandom of=/mnt/disktest
+
+
+HOWTO Flash to an SD Card
+----------------------------
+
+Insert a 4GB+ SD card into to your dev computer (using an adapter if
+necessary). ALL DATA AND PARTITIONS WILL BE DELETED.
+
+Use lsblk to figure out which block device the card is (eg, /dev/sdc).
+
+Copy over the image (eg, binary.img) with the dd utility:
+
+    $ dd if=binary.img of=/dev/sdc bs=1M
+
+
+Potential Improvements
+-------------------------
+
+Block-aligned partitions may give significantly better write performance:
+
+http://linux-howto-guide.blogspot.de/2009/10/increase-usb-flash-drive-write-speed.html
+http://www.olpcnews.com/forum/index.php?topic=4993.0
