@@ -51,3 +51,5 @@ vim-nox
 user-setup
 live-tools
 sudo
+mtools
+parted
