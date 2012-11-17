@@ -47,6 +47,8 @@ stale packages. Use `lb clean` to clear caches.
 Once the above build requirements are satisfied:
 
     lb clean --purge
+    lb clean --binary
+    lb clean
     lb config
     lb build
 
