@@ -1,0 +1,15 @@
+#!/bin/sh
+
+export ADMINUSER="tor"
+export ADMINGROUP="tor"
+export TORADMINGROUP="debian-tor"
+
+# add users and groups (ignore failures if groups already exist)
+addgroup $ADMINGROUP
+useradd -g $ADMINGROUP -G $TORADMINGROUP -s /bin/bash $ADMINUSER
+# TODO: $ADMINUSER passwd?
+
+# give Tor permission to modify it's own configuration
+chgrp $TORADMINGROUP /etc/tor/ /etc/tor/*
+chmod g+rw /etc/tor/ /etc/tor/*
+
