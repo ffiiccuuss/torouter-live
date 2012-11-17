@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Creating tor user and groups"
+
 export ADMINUSER="tor"
 export ADMINGROUP="tor"
 export TORADMINGROUP="debian-tor"
