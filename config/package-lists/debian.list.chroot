@@ -46,3 +46,8 @@ python-setuptools
 apt-utils
 dnsutils
 torsocks
+lsof
+vim-nox
+user-setup
+live-tools
+sudo
