@@ -1,0 +1,8 @@
+
+If you build "plainroot" flat ext3 images during development, you might be able
+to save time by using rsync instead of dd:
+
+    sudo mount /dev/sdb1 /mnt
+    sudo rsync -arv ./binary/ /mnt/
+    sudo umount /mnt
+

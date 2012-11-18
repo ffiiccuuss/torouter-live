@@ -52,6 +52,12 @@ Once the above build requirements are satisfied:
     lb config
     lb build
 
+    lb clean --binary
+    lb config
+    lb binary_chroot
+    lb binary_rootfs
+    lb binary_hdd
+
 ### Develop
 
 Basic configuration options are in ./auto/config

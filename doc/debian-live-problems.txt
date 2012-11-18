@@ -7,6 +7,9 @@ here:
 
 ### Errors when building flat ("plain") filesystem images
 
+NOTE: these problems should have been fixed by removing the rootfs stage from
+caching?
+
 When building a chroot-filesystem=none image, if you encounter:
 
     cp: cannot create regular file `binary/live/filesystem.packages': No such file or directory
@@ -19,6 +22,21 @@ You will need to:
 If you don't run the second line as well, you will get the error:
 
     cp: cannot stat `cache/binary_rootfs/filesystem.*': No such file or directory
+
+### Missing symlinked files
+
+If you get a boot error like:
+
+    Kernel panic - not syncing: Attempted to kill init!
+
+Then init may be unable to link to necessary library (like lib/ld-linux.so.3),
+because of some badness in the binary build system. Try overcoming with:
+
+    lb clean --binary
+    lb config
+    lb binary_chroot
+    lb binary_rootfs
+    lb binary_hdd
 
 ### mksquashfs Segfaults in qemu
 

@@ -1,0 +1,21 @@
+
+The DNS and DHCP scheme is very complicated.
+
+torouter itself (the base configuration) uses the OpenDNS servers, as
+configured in /etc/resolv.conf.
+
+Seperate dnsmasq configurations and init scripts are used for local ethernet
+and the transparently tor-ified wifi access point. The "regular" dnsmasq daemon
+is disabled (in /etc/default/dnsmasq). The ethernet daemon makes upstream
+requests "as usual" (according to /etc/resolve.conf), while the wifi daemon
+makes upstream requests to ttdnsd on port 5354.
+
+ttdnsd is used to make upstream requests locally via Tor on port 5353. It is
+configured in /etc/default/ttdnsd and listens for requests on port 5354.
+
+Tor is configured (in /etc/tor/torrc) to listen locally on port 5353 of address
+172.16.23.1.
+
+The /etc/network/interfaces file makes pre- and post- interface configuration
+calls to (re) start the tor, ttdnsd, and dnsmasq daemons.
+

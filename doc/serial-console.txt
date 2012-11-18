@@ -16,5 +16,11 @@ on /dev/ttySO after system boot.
 
 See also:
 
-config/includes.chroot/etc/inittab
-config/includes.chroot/lib/live/config/9999-serial_console
+    config/includes.chroot/etc/inittab
+    config/includes.chroot/lib/live/config/9999-serial_console
+
+
+### New fix
+
+echo "T0:2345:respawn:/sbin/getty -L ttyS0 115200 vt100" >> /etc/inittab
+
