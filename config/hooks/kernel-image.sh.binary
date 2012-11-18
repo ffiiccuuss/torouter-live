@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -e
-
-echo "re-copying kernel and initrd from chroot..."
-cp chroot/boot/uImage binary/live/
-cp chroot/boot/uInitrd binary/live/

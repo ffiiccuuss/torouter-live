@@ -4,20 +4,17 @@ set -e
 
 # TODO: this seems to be a null-op... flash-kernel is symlinked to `true`?
 echo "Trying to flashing kernel..."
-/usr/sbin/flash-kernel || echo "Failed to flash kernel! Don't worry, will mangle"
+#/usr/sbin/flash-kernel || echo "Failed to flash kernel! Don't worry, will mangle"
+/usr/sbin/flash-kernel
 
 echo "Mangling kernel..."
-
-# XXX: temporary
-cp /boot/initrd.img-* /boot/initrd.img
-
-#mkdir /tmp/initrd-repack
-#(cd /tmp/initrd-repack ; \
-#    zcat /boot/initrd.img-* | cpio -i ; \
-#    rm -f conf/param.conf ; \
-#    find . | cpio --quiet -o -H newc | \
-#    gzip -9 > /boot/initrd.img)
-#rm -rf /tmp/initrd-repack
+mkdir /tmp/initrd-repack
+(cd /tmp/initrd-repack ; \
+    zcat /boot/initrd.img-* | cpio -i ; \
+    rm -f conf/param.conf ; \
+    find . | cpio --quiet -o -H newc | \
+    gzip -9 > /boot/initrd.img)
+rm -rf /tmp/initrd-repack
 
 (cd /boot ; \
     cp /usr/lib/linux-image-*/kirkwood-dreamplug.dtb dtb ; \
@@ -28,3 +25,7 @@ cp /boot/initrd.img-* /boot/initrd.img
     mkimage -A arm -O linux -T ramdisk -C gzip -a 0x0 -e 0x0 \
     -n "Debian ramdisk (unknown version)" \
     -d initrd.img uInitrd )
+
+echo "Creating /live and copying in boot images..."
+mkdir /live
+cp /boot/uInitrd /boot/uImage /boot/dtb /live
