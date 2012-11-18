@@ -11,7 +11,6 @@ lb config noauto \
     --cache-packages true \
     --parent-mirror-bootstrap http://http.debian.net/debian \
     --mirror-bootstrap http://http.debian.net/debian \
-    --cache-stages rootfs \
     --distribution wheezy \
     --parent-distribution wheezy \
     --binary-filesystem ext3 \
