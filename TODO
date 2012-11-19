@@ -24,6 +24,7 @@
 	Nov 17 21:20:25.065 [err] Reading config failed--see warnings above.
 
 serial login debugging:
+- perhaps related to symlink issue?
 - user not being created correctly?
 - init seems to be the problem: doesn't respect inittab
     - maybe due to earlier init not completing? known problem w/ rc.local
@@ -35,6 +36,24 @@ serial login debugging:
 - mildly shifted u-boot parameters around...
 - perhaps a new or changed set of packages? or a package dependancy?
 - also, haven't been building regularly due to missing symlink problem
-- maybe need to update host's live-boot, live-config?
-- or should add snapshots repos to the package list?
+- tried using pinned sid version of live-* packages, also update build
+  machine's live-*
 - WORKED BEFORE ARG
+
+- suspicious packages:
+    - tcpd
+    - u-boot
+    - resolveconf
+    - xauth
+    - module-init-tools
+    - krb5-locales
+    - keyboard-configuration
+    - flash-kernel
+    - devio
+    - dbus
+    - bind9-host
+    - user-setup
+    - sudo
+- removed sid pinning crap
+- moved serial console fixer back to default
+- still have missing symlink problem! due to kernel mangle hook? ownership?
