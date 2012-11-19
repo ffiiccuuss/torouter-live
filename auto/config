@@ -20,12 +20,11 @@ lb config noauto \
     --bootstrap-qemu-arch armel \
     --bootstrap-qemu-static /usr/bin/qemu-arm-static \
     --keyring-packages "debian-archive-keyring deb.torproject.org-keyring" \
-    --bootappend-live "console=ttyS0,115200 boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot" \
+    --bootappend-live "console=ttyS0,115200" \
     "${@}"
 
 # Note: chroot filesystem should be 'squashfs' for production images (?), or
 # 'none' for development (easier to modify and debug rootfs)
 
-# Note: bootappend-live options are ignored when booting from u-boot, but are
-# included here for clarity. check ../doc for most up-to-date recommended boot
-# flags
+# Note: bootappend-live options are ignored when booting from u-boot. Check
+# ../doc for most up-to-date recommended boot flags
