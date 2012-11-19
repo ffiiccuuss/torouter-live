@@ -3,9 +3,10 @@
 set -e
 
 # TODO: this seems to be a null-op... flash-kernel is symlinked to `true`?
-echo "Trying to flashing kernel..."
+# XXX: remove this
+#echo "Trying to flashing kernel..."
 #/usr/sbin/flash-kernel || echo "Failed to flash kernel! Don't worry, will mangle"
-/usr/sbin/flash-kernel
+#/usr/sbin/flash-kernel
 
 echo "Mangling kernel..."
 mkdir /tmp/initrd-repack

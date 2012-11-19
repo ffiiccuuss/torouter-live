@@ -6,15 +6,11 @@ wget
 iproute
 net-tools
 hostname
-module-init-tools
 wget
-resolvconf
 udev
 isc-dhcp-client
 ifupdown
 devio
-initramfs-tools
-uboot-mkimage
 parted
 dosfstools
 apt
@@ -25,7 +21,6 @@ pandoc
 python-simplejson
 make
 dialog
-locales-all
 uaputl
 uapevent
 dnsmasq
@@ -48,8 +43,5 @@ dnsutils
 torsocks
 lsof
 vim-nox
-user-setup
-live-tools
-sudo
 mtools
 parted
