@@ -45,3 +45,6 @@ lsof
 vim-nox
 mtools
 parted
+sudo
+locales-all
+uboot-mkimage
