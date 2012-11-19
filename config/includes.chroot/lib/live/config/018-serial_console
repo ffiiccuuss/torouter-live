@@ -18,9 +18,7 @@ Serialconsole ()
 Configure_serialconsole ()
 {
 	# Note unusual delimiters
-    # This *fixes*, but does not necessarily enable...
-	sed -i -e "s|\(T0:.*\?/dev/\)\(tty\)\(.*\?/dev/\)\(tty\)\(.*\)|\1\2S0\3\4S0\5|" /etc/inittab
-    tail /etc/inittab
+	sed -i -e "s|#\(T0:.*\?/dev/\)\(tty\)\(.*\?/dev/\)\(tty\)\(.*\)|\1\2S0\3\4S0\5|" /etc/inittab
 	init q
 
 	# Creating state file
