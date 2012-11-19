@@ -1,11 +1,9 @@
-- add vim-nox and lsof back into package lists
-- keyring stuff: config/archives/any-repo.key.{binary,chroot}
-- copy in torouterui package, add dependancies
+- commit torouterui package, add dependancies
 - custom kernel
     http://live.debian.net/manual/html/live-manual.en.html#411
 - determine which configurations can be settled using debconf preseeds
     http://live.debian.net/manual/html/live-manual.en.html#495
-- set user password
+- reset the user password properly
     http://live.debian.net/manual/html/live-manual.en.html#505
 - dreamplug: uap hack, libertas firmware
 - ntp.conf?
@@ -18,42 +16,9 @@
 	sudo: unknown user: torouter
 	sudo: unable to initialize policy plugin
 
-- /var/lib/tor permissions:
-	Nov 17 21:20:25.064 [warn] /var/lib/tor is not owned by this user (debian-tor, 105) but by root (0). Perhaps you are running Tor as the wrong user?
-	Nov 17 21:20:25.065 [warn] Failed to parse/validate config: Couldn't access/create private data directory "/var/lib/tor"
-	Nov 17 21:20:25.065 [err] Reading config failed--see warnings above.
-
-serial login debugging:
-- perhaps related to symlink issue?
-- user not being created correctly?
-- init seems to be the problem: doesn't respect inittab
-    - maybe due to earlier init not completing? known problem w/ rc.local
-    - 'init s' then canceling brings up login correctly
-    - ordering of script might be the problem? tried moving to 010-*
-- add "dhclient eth0" to 9999-* and "echo root:crud | chpasswd" script to
-  enable remote login and set root password (for debugging with a router+ssh)
-- tried removing modprobe.d and sysctl.conf files
-- mildly shifted u-boot parameters around...
-- perhaps a new or changed set of packages? or a package dependancy?
-- also, haven't been building regularly due to missing symlink problem
-- tried using pinned sid version of live-* packages, also update build
-  machine's live-*
-- WORKED BEFORE ARG
-
-- suspicious packages:
-    - tcpd
-    - u-boot
-    - resolveconf
-    - xauth
-    - module-init-tools
-    - krb5-locales
-    - keyboard-configuration
-    - flash-kernel
-    - devio
-    - dbus
-    - bind9-host
-    - user-setup
-    - sudo
-- removed sid pinning crap
-- moved serial console fixer back to default
-- still have missing symlink problem! due to kernel mangle hook? ownership?
+- remove unnecessary tty2+ lines completely from /etc/inittab
+- tor:
+    - chown debian-tor:debian-tor /var/log/tor /var/lib/tor
+    - chgrp debian-tor /etc/tor/ /etc/tor/*
+    - chmod g+rw /etc/tor/ /etc/tor/*
+    - debug issue with /var/log/tor/notices.log
