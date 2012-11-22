@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo " dhclient eth0"
-dhclient eth0
