@@ -10,11 +10,11 @@
 - custom kernel (grsec etc)
     http://live.debian.net/manual/html/live-manual.en.html#411
 - openntpd prevents login
-- include ttdnsd package manually
 - eth0 hotplug
 - remove torouter /etc/hosts listing
 
 TBD:
+- remove "auto uap0" from /etc/network/interfaces
 - persistant setuid issue
 - determine which configurations can be settled using debconf preseeds
     http://live.debian.net/manual/html/live-manual.en.html#495
