@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo " torouter passwd"
+echo "torouter:torouter" | chpasswd

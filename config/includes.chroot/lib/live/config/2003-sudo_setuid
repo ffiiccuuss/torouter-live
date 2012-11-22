@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo " sudo_setuid"
+chmod u+s /usr/bin/sudo || echo "Couldn't setuid on /usr/bin/sudo! Skipping."
+
