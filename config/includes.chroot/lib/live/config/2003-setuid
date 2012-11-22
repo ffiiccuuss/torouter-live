@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo " setuid"
+chmod u+s /usr/bin/sudo || echo "Couldn't setuid on /usr/bin/sudo! Skipping."
+chmod u+s /bin/ping || echo "Couldn't setuid on /bin/ping! Skipping."
+chmod u+s /bin/ping6 || echo "Couldn't setuid on /bin/ping6! Skipping."
+chmod u+s /bin/su || echo "Couldn't setuid on /bin/su! Skipping."
+
