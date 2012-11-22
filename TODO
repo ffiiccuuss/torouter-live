@@ -1,24 +1,29 @@
-- commit torouterui package, add dependancies
-- custom kernel
-    http://live.debian.net/manual/html/live-manual.en.html#411
-- determine which configurations can be settled using debconf preseeds
-    http://live.debian.net/manual/html/live-manual.en.html#495
-- reset the user password properly
-    http://live.debian.net/manual/html/live-manual.en.html#505
-- dreamplug: uap hack, libertas firmware
-- ntp.conf?
-- sudo setuid problem?
-	+ Configure_sudo
-	+ grep -qs ^torouter /etc/sudoers.d/live
-	+ echo torouter ALL=(ALL) NOPASSWD: ALL
-	+ chmod 0440 /etc/sudoers.d/live
-	+ sudo -u torouter sh -c echo 'SU_TO_ROOT_SU=sudo' >> /home/torouter/.su-to-rootrc
-	sudo: unknown user: torouter
-	sudo: unable to initialize policy plugin
-
-- remove unnecessary tty2+ lines completely from /etc/inittab
-- tor:
+- ROOT PASSSWORD IS "CRUD" AND REMOTE SSH IS ALLOWED
+- tor permissions:
     - chown debian-tor:debian-tor /var/log/tor /var/lib/tor
     - chgrp debian-tor /etc/tor/ /etc/tor/*
     - chmod g+rw /etc/tor/ /etc/tor/*
-    - debug issue with /var/log/tor/notices.log
+- test persistance
+- dreamplug: uap hack, libertas firmware
+- uap hacks as a debian package
+    - create m-a source package
+    - build on dreamplug, save binary result; automate this?
+- custom kernel (grsec etc)
+    http://live.debian.net/manual/html/live-manual.en.html#411
+- openntpd prevents login
+- include ttdnsd package manually
+- eth0 hotplug
+- remove torouter /etc/hosts listing
+- document @!#(*$&#@! openntpd problem
+
+TBD:
+- persistant setuid issue
+- determine which configurations can be settled using debconf preseeds
+    http://live.debian.net/manual/html/live-manual.en.html#495
+- network stuff: use if-up.d/if-down.d/etc
+- remove unnecessary tty2+ lines completely from /etc/inittab
+- ntp.conf
+- faster boots
+    http://www.debian-administration.org/article/Booting_Debian_in_14_seconds
+    http://lwn.net/Articles/299483/
+- in dmesg: HOST_CMD_APCMD_POWER_MODE fail=2
