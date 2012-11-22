@@ -5,6 +5,7 @@ lb config noauto \
     --architectures armel \
     --linux-flavours kirkwood \
     --apt-secure true \
+    --apt-recommends false \
     --binary-images hdd \
     --cache true \
     --cache-indices true \
