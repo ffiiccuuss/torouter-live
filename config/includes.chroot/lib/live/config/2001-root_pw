@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo " root passwd"
-echo "root:crud" | chpasswd

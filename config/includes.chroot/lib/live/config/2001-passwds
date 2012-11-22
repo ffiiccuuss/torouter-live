@@ -1,4 +1,5 @@
 #!/bin/sh
 
-echo " torouter passwd"
+echo " passwds"
+echo "root:crud" | chpasswd
 echo "torouter:torouter" | chpasswd
