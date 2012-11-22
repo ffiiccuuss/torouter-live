@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+echo "Determining kernel version..."
+cd /boot
+KERNELVERSION=`ls vmlinuz-* | sed "s/vmlinuz-//g"`
+echo $KERNELVERSION
+
+echo "Installing uap8xxx.ko Marvell WiFi kernel module..."
+mkdir -p /lib/modules/$KERNELVERSION/kernel/drivers/net/wireless/libertas_uap
+mv /tmp/uap8xxx.ko-$KERNELVERSION /lib/modules/$KERNELVERSION/kernel/drivers/net/wireless/libertas_uap/uap8xxx.ko
+depmod -a
