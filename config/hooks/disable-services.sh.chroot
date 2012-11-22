@@ -1,9 +1,7 @@
 #!/bin/sh
 
-set -e
-
 echo "Disabling network services (they get run by network scripts)"
-update-rc.d tor disable
-update-rc.d dnsmasq disable
-update-rc.d ttdnsd disable
+update-rc.d tor disable || true
+update-rc.d dnsmasq disable || true
+update-rc.d ttdnsd disable || true
 
