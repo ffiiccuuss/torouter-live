@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Need to run depmod after hacking in uap8xxx.ko (DreamPlug WiFi).
+# 
+# Unfortunately, this build step is relatively slow :(
+set -e
+
+echo "It's depmod time!"
+KERNELVERSION=`ls /boot/vmlinuz-* | sed -e "s/\/boot\/vmlinuz-//"`
+dpkg-reconfigure linux-image-$KERNELVERSION
+
