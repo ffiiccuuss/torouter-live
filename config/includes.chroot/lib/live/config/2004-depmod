@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo " uap8xxx"
+depmod -a
+modprobe -v uap8xxx
