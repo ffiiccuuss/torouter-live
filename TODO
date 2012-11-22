@@ -1,8 +1,4 @@
 - ROOT PASSSWORD IS "CRUD" AND REMOTE SSH IS ALLOWED
-- tor permissions:
-    - chown debian-tor:debian-tor /var/log/tor /var/lib/tor
-    - chgrp debian-tor /etc/tor/ /etc/tor/*
-    - chmod g+rw /etc/tor/ /etc/tor/*
 - test persistance
 - uap hacks as a debian package
     - create m-a source package
@@ -14,6 +10,7 @@
 - remove torouter /etc/hosts listing
 
 TBD:
+- real tor permissions fix
 - remove "auto uap0" from /etc/network/interfaces
 - persistant setuid issue
 - determine which configurations can be settled using debconf preseeds
