@@ -2,14 +2,15 @@
 
 set -e
 
-# TODO: this seems to be a null-op... flash-kernel is symlinked to `true`?
-# XXX: remove this
-#echo "Trying to flashing kernel..."
-#/usr/sbin/flash-kernel || echo "Failed to flash kernel! Don't worry, will mangle"
-#/usr/sbin/flash-kernel
+# This script adds the DreamPlug's device tree file to the kernel image,
+# generates uImage and uInitrd style files (for use with u-boot, as opposed to
+# syslinux-style images), and moves those files to /live.
 
 echo "Mangling kernel..."
-mkdir /tmp/initrd-repack
+# TBD: is it necessary to do this first stage of mangling which removes the
+# conf/param.conf file, which may or may not be clobbering kernel boot
+# arguments?
+mkdir -p /tmp/initrd-repack
 (cd /tmp/initrd-repack ; \
     zcat /boot/initrd.img-* | cpio -i ; \
     rm -f conf/param.conf ; \
@@ -28,5 +29,5 @@ rm -rf /tmp/initrd-repack
     -d initrd.img uInitrd )
 
 echo "Creating /live and copying in boot images..."
-mkdir /live
+mkdir -p /live
 cp /boot/uInitrd /boot/uImage /boot/dtb /live
