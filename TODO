@@ -4,7 +4,6 @@
     - chgrp debian-tor /etc/tor/ /etc/tor/*
     - chmod g+rw /etc/tor/ /etc/tor/*
 - test persistance
-- dreamplug: uap hack, libertas firmware
 - uap hacks as a debian package
     - create m-a source package
     - build on dreamplug, save binary result; automate this?
@@ -14,7 +13,6 @@
 - include ttdnsd package manually
 - eth0 hotplug
 - remove torouter /etc/hosts listing
-- document @!#(*$&#@! openntpd problem
 
 TBD:
 - persistant setuid issue

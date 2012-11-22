@@ -80,8 +80,3 @@ necessary):
 
     DU_DIM="$(echo 50 + $DU_DIM | bc)"
 
-### Missing Serial Console on Boot
-
-It appears to break live-boot configuration if the user-setup debian package is
-installed?
-

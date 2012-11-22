@@ -20,7 +20,7 @@ See also:
     config/includes.chroot/lib/live/config/9999-serial_console
 
 
-### New fix
+### Alternative Fix
 
 echo "T0:2345:respawn:/sbin/getty -L ttyS0 115200 vt100" >> /etc/inittab
 
