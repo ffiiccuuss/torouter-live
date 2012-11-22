@@ -17,7 +17,6 @@ apt
 iputils-ping
 haveged
 python
-pandoc
 python-simplejson
 make
 dialog
@@ -46,5 +45,7 @@ vim-nox
 mtools
 parted
 sudo
-locales-all
+locales
 uboot-mkimage
+dctrl-tools
+tsocks
