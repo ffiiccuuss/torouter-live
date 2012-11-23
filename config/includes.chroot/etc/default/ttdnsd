@@ -11,7 +11,8 @@ ADDR_ARG="-b 172.16.23.1"
 PORT_ARG="-p 5354"
 
 # Debug logging
-# DEBUG_LOGGING="-l"
+#DEBUG_LOGGING="-l"
 
 # Glue all of it together below
-DEFAULTS="$ADDR_ARG $PORT_ARG"
+# TODO: ttdnsd does not seem to work in a chroot?
+DEFAULTS="$ADDR_ARG $PORT_ARG $DEBUG_LOGGING -c"
