@@ -26,7 +26,7 @@ iface eth1 inet static
 	pre-down /etc/init.d/dnsmasq_lan stop
 
 # The magic Tor wireless network
-# *NOT* auto; gets configured by eth0 post-*
+auto uap0
 iface uap0 inet static
 	address 172.16.23.1
 	netmask 255.255.255.0
@@ -34,6 +34,7 @@ iface uap0 inet static
 	broadcast 172.16.23.255
 	pre-up ifconfig uap0 hw ether 00:66:66:66:66:66
 	pre-up ip addr del 172.16.23.1/24 dev uap0 || true
+	post-up sysctl -w net.ipv6.conf.uap0.disable_ipv6=1 # just for this one
 	post-up /etc/init.d/tor start
 	post-up /etc/init.d/tor reload
 	post-up /etc/init.d/dnsmasq_wifi start
