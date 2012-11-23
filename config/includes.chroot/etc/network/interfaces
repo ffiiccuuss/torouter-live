@@ -27,7 +27,7 @@ iface eth1 inet static
 	pre-down /etc/init.d/dnsmasq_lan stop
 
 # The magic Tor wireless network
-auto uap0
+# *NOT* auto; gets configured by eth0 post-*
 iface uap0 inet static
 	address 172.16.23.1
 	netmask 255.255.255.0

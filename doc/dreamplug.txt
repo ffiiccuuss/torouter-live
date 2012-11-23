@@ -33,7 +33,7 @@ The desired u-boot configuration is:
     x_bootcmd_initrd ext2load usb 1:1 0x6900000 live/uInitrd
     x_bootargs_root root=/dev/sdb1 rootdelay=4
     x_bootargs_console console=ttyS0,115200
-    x_bootargs boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot
+    x_bootargs boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot nonetworking
 
 
 HOWTO: flash and configure u-boot
@@ -61,7 +61,7 @@ file size changes from exactly 196076 bytes):
     setenv x_bootcmd_initrd ext2load usb 1:1 0x6900000 live/uInitrd
     setenv x_bootargs_root root=/dev/sdb1 rootdelay=4
     setenv x_bootargs_console console=ttyS0,115200
-    setenv x_bootargs boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot
+    setenv x_bootargs boot=live config username=torouter hostname=torouter live-media=/dev/sdb1 live-media-timeout=10 debug plainroot nonetworking
     saveenv
     reset
 
