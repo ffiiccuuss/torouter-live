@@ -1,21 +1,58 @@
 
-The DNS and DHCP scheme is very complicated.
+### The DNS and DHCP scheme is Complicated
 
-torouter itself (the base configuration) uses the OpenDNS servers, as
-configured in /etc/resolv.conf.
+A common problem is DNS leaking, which happens when TCP connections go through
+the tor network correctly, but the initial DNS lookup (to find the remote's IP
+address) goes over UDP (which tor does not support) "out of band", aka over the
+regular old upstream network connection. In this case an observer might not see
+the contents of a connection, but they can see which remote hosts you are
+connecting to, and when.
 
-Seperate dnsmasq configurations and init scripts are used for local ethernet
-and the transparently tor-ified wifi access point. The "regular" dnsmasq daemon
-is disabled (in /etc/default/dnsmasq). The ethernet daemon makes upstream
-requests "as usual" (according to /etc/resolve.conf), while the wifi daemon
-makes upstream requests to ttdnsd on port 5354.
+The Tor daemon has a DNS server built in to get around the UDP problem, and
+also does transparent proxying of hidden service URLs (.onion domains), but it
+only implements the A and AAAA IP records.
 
-ttdnsd is used to make upstream requests locally via Tor on port 5353. It is
+Some DNS servers allow connections over TCP (which means requests can be
+tunneled through the tor network itself), and the ttdnsd utility can act as a
+proxy that accepts local UDP requests and tunnels them out through TCP.
+However, regular DNS servers can't do .onion hidden service lookups, so they
+aren't a complete solution.
+
+A hybrid configuration directs .onion requests to the Tor daemon and all other
+requests via TCP through the tor network to well known DNS servers. 
+
+### Implementation
+
+torouter itself (the base configuration) uses the OpenDNS and Google servers,
+as configured in /etc/resolv.conf.
+
+TODO: /etc/resolv.conf gets clobbered with local DHCP-based settings
+
+ttdnsd is used to make upstream requests via TCP over the Tor network. It is
 configured in /etc/default/ttdnsd and listens for requests on port 5354.
 
 Tor is configured (in /etc/tor/torrc) to listen locally on port 5353 of address
 172.16.23.1.
 
+Seperate dnsmasq configurations and init scripts are used for local ethernet
+and the transparently tor-ified wifi access point. The "regular" dnsmasq daemon
+is disabled (in /etc/default/dnsmasq). The ethernet daemon makes upstream
+requests "as usual" (according to /etc/resolve.conf). The wifi daemon makes
+most upstream requests to ttdnsd on port 5354, but forwards .onion domain
+requests to Tor on port 5353. It is configured in /etc/dnsmasq_wifi.conf.
+
 The /etc/network/interfaces file makes pre- and post- interface configuration
 calls to (re) start the tor, ttdnsd, and dnsmasq daemons.
 
+With the ttdnsd scheme, one will still get warnings in /var/log/tor/notices.log
+about IP-only requests:
+
+    Nov 23 17:44:37.000 [warn] Your application (using socks4 to port 53) is
+    giving Tor only an IP address. Applications that do DNS resolves themselves
+    may leak information. Consider using Socks4A (e.g. via privoxy or socat)
+    instead. For more information, please see
+    https://wiki.torproject.org/TheOnionRouter/TorFAQ#SOCKSAndDNS.
+
+These can (hopefully) be ignored.
+
+TODO: ttdnsd does not seem to work in a chroot, so the "-c" flag gets passed.
