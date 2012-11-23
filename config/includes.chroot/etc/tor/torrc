@@ -96,8 +96,8 @@ Nickname Torouter
 ## Define these to limit how much relayed traffic you will allow. Your
 ## own traffic is still unthrottled. Note that RelayBandwidthRate must
 ## be at least 20 KBytes.
-RelayBandwidthRate 50KB
-RelayBandwidthBurst 75KB
+RelayBandwidthRate 400KB
+RelayBandwidthBurst 500KB
 
 ## Contact info to be published in the directory, so we can contact you
 ## if your relay is misconfigured or something else goes wrong. Google
