@@ -1,0 +1,12 @@
+
+# Don't stop for errors
+set +e
+
+# bufferbloatery
+ifconfig eth0 txqueuelen 50
+ifconfig eth1 txqueuelen 50
+ifconfig uap0 txqueuelen 16
+ethtool -G eth0 tx 64
+ethtool -G eth1 tx 64
+
+exit 0
