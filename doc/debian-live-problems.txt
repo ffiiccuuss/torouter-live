@@ -80,3 +80,12 @@ necessary):
 
     DU_DIM="$(echo 50 + $DU_DIM | bc)"
 
+### Adding packages to config/packages.chroot
+
+When a new package is added to config/packages.chroot, the entire build
+environment must be refreshed (lb clean --purge). 
+
+Otherwise you will get an error like:
+
+    E: Unable to locate package <packagename>
+

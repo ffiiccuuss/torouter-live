@@ -1,0 +1,20 @@
+
+There seems to be no official debian package for ttdnsd, and the old ~squeeze
+torouter package didn't seem to work with debian live. debhelper makes it easy
+enough to rebuild a package on an ARM device itself.
+
+The source can be grabbed from:
+
+    https://gitweb.torproject.org/ioerror/ttdnsd.git
+
+Build dependancy packages are:
+
+    debhelper build-essential tsocks fakeroot
+
+Then do:
+
+    make deb
+
+Copied out the resulting file (it ends up in ./..) and put that in
+packages.chroot for now.
+
