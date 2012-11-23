@@ -5,3 +5,5 @@ update-rc.d tor disable || true
 update-rc.d dnsmasq disable || true
 update-rc.d ttdnsd disable || true
 
+echo "Enable proxy"
+update-rc.d proxy enable defaults
