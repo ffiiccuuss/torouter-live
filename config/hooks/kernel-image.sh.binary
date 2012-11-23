@@ -2,5 +2,20 @@
 
 set -e
 
+# This script is necessary for squashfs (or any not-plainroot) builds, where
+# the usual /live images end up inside the filesystem.
+
+# In these cases the kernel ships in three places, which is inefficient: 
+#   enclosing binary /live (mangled)
+#   rootfs /live (mangled)
+#   rootfs /boot (original)
+
 echo "(re)Copying in kernel images..."
 cp -a chroot/live/uInitrd chroot/live/uImage chroot/live/dtb binary/live/
+
+# This reduces final image size significantly; original raw kernel files are
+# still duplicated in /boot.
+# Don't stop on errors, because this script may have already been run.
+echo "Removing redundant kernel images..."
+rm binary/live/vmlinuz-* || true
+rm binary/live/initrd.img-* || true

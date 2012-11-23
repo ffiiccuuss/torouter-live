@@ -6,6 +6,9 @@ set -e
 # generates uImage and uInitrd style files (for use with u-boot, as opposed to
 # syslinux-style images), and moves those files to /live.
 
+# See also kernel-image.sh.binary, which recopies files at the final binary
+# assembly stage.
+
 KERNELVERSION=`ls /boot/vmlinuz-* | sed -e "s/\/boot\/vmlinuz-//"`
 
 echo "Mangling kernel..."
@@ -31,6 +34,8 @@ rm -rf /tmp/initrd-repack
     -d initrd.img uInitrd )
 rm /boot/initrd.img
 
+# Useful to to this here because sometimes /live doesn't get created
+# otherwise...
 echo "Creating /live and copying in boot images..."
 mkdir -p /live
 mv /boot/uInitrd /boot/uImage /boot/dtb /live
