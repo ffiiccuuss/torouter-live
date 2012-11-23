@@ -6,13 +6,15 @@ set -e
 # generates uImage and uInitrd style files (for use with u-boot, as opposed to
 # syslinux-style images), and moves those files to /live.
 
+KERNELVERSION=`ls /boot/vmlinuz-* | sed -e "s/\/boot\/vmlinuz-//"`
+
 echo "Mangling kernel..."
 # TBD: is it necessary to do this first stage of mangling which removes the
 # conf/param.conf file, which may or may not be clobbering kernel boot
 # arguments?
 mkdir -p /tmp/initrd-repack
 (cd /tmp/initrd-repack ; \
-    zcat /boot/initrd.img-* | cpio -i ; \
+    zcat /boot/initrd.img-$KERNELVERSION | cpio -i ; \
     rm -f conf/param.conf ; \
     find . | cpio --quiet -o -H newc | \
     gzip -9 > /boot/initrd.img)
@@ -20,14 +22,15 @@ rm -rf /tmp/initrd-repack
 
 (cd /boot ; \
     cp /usr/lib/linux-image-*/kirkwood-dreamplug.dtb dtb ; \
-    cat vmlinuz-* dtb >> temp-kernel ; \
-    mkimage -A arm -O linux -T kernel -n "Debian kernel (unknown version)" \
+    cat vmlinuz-$KERNELVERSION dtb >> temp-kernel ; \
+    mkimage -A arm -O linux -T kernel -n "Debian kernel ($KERNELVERSION)" \
     -C none -a 0x8000 -e 0x8000 -d temp-kernel uImage ; \
     rm -f temp-kernel ; \
     mkimage -A arm -O linux -T ramdisk -C gzip -a 0x0 -e 0x0 \
-    -n "Debian ramdisk (unknown version)" \
+    -n "Debian ramdisk ($KERNELVERSION)" \
     -d initrd.img uInitrd )
+rm /boot/initrd.img
 
 echo "Creating /live and copying in boot images..."
 mkdir -p /live
-cp /boot/uInitrd /boot/uImage /boot/dtb /live
+mv /boot/uInitrd /boot/uImage /boot/dtb /live
