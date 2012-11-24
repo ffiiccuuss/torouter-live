@@ -21,14 +21,21 @@ Multiple layers of scary disclaimer! Oh my!
 
    !!! this work is unlicensed and contains licensed material!
 
+
 ### Build Requirements
 
-Only tested on a debian wheezy host with many development packages already
-installed; YMMV.
+By default a live image is built intented to be run on a DreamPlug device from
+the external SD card. For now the default image is a squashfs
 
 Install live-build and qemu:
 
     sudo apt-get install qemu-user-static qemu-utils debootstrap live-build
+
+The chroot build flag is set to 'false' to avoid build problems, which is
+warned against extensively in the documentation. This introduces additional
+build requirements:
+
+    sudo apt-get install dctrl-tools mtools parted squashfs-tools
 
 You need a recent version of live-build because of a secring.gpg-related error
 (see http://lists.debian.org/debian-live/2012/07/msg00122.html); download the
@@ -41,25 +48,29 @@ You might also want the Debian Live manuals:
 
     sudo apt-get install live-manual-html
 
+
 ### Build an Image
 
-Warning: aggressive caching is in place, which means resulting images may have
-stale packages. Use `lb clean` to clear caches.
+WARNING: read also ./doc/debian-live-problems.txt for additional hacks and work
+arounds.
+
+WARNING: aggressive caching is in place, which means resulting images may have
+stale packages. Use `lb clean --purge` to clear caches. Always run `lb config`
+after a clean.
 
 Once the above build requirements are satisfied:
 
     lb clean --purge
-    lb clean --binary
-    lb clean
     lb config
     lb build
 
-    lb clean --binary
-    lb config
-    lb binary_chroot
-    lb binary_rootfs
-    lb binary_hdd
+
+### Install and Boot
+
+Read ./doc/dreamplug.txt and ./doc/sd-card.txt.
+
 
 ### Develop
 
 Basic configuration options are in ./auto/config
+
