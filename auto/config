@@ -10,8 +10,10 @@ lb config noauto \
     --cache true \
     --cache-indices true \
     --cache-packages true \
-    --parent-mirror-bootstrap http://http.debian.net/debian \
-    --mirror-bootstrap http://http.debian.net/debian \
+    --mirror-binary http://cdn.debian.net/debian \
+    --parent-mirror-binary http://cdn.debian.net/debian \
+    --mirror-bootstrap http://cdn.debian.net/debian \
+    --parent-mirror-bootstrap http://cdn.debian.net/debian \
     --distribution wheezy \
     --parent-distribution wheezy \
     --binary-filesystem ext3 \
