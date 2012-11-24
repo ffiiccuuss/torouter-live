@@ -11,6 +11,8 @@
 
 set -e
 
+. /lib/lsb/init-functions
+
 INTIF1="eth0"
 INTIF2="uap0"
 EXTIF="eth1"
