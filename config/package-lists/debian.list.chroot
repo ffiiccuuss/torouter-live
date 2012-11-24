@@ -41,7 +41,7 @@ apt-utils
 dnsutils
 torsocks
 lsof
-vim-nox
+vim-tiny
 mtools
 parted
 sudo
