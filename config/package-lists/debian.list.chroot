@@ -16,7 +16,8 @@ dosfstools
 apt
 iputils-ping
 haveged
-python2.7
+python
+libpython2.7
 python-simplejson
 make
 dialog

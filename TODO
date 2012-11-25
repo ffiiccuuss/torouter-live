@@ -1,17 +1,34 @@
-- ROOT PASSSWORD IS "CRUD" AND REMOTE SSH IS ALLOWED
+- ROOT PASSSWORD IS "CRUD" AND ROOT SSH IS ALLOWED
 - test persistance
 - uap hacks as a debian package
     - create m-a source package
     - build on dreamplug, save binary result; automate this?
-- custom kernel (grsec etc)
-    http://live.debian.net/manual/html/live-manual.en.html#411
-- openntpd prevents login
-- eth0 hotplug
-- remove torouter /etc/hosts listing
+- cross-networks are leaky! need to fix proxy script?
+- ifdown of uap0 doesn't work
+- (re)test with actual connectivity
+- verify that ttdnsd requests are actually going via tsocks
+- timing analysis:
+    https://trac.torproject.org/projects/tor/ticket/6588
+- upstream: python-augeas requires libpython2.7
+- add debug/success message to proxy init.d script
+
+tor:
+    Nov 23 17:33:45.000 [warn] Rejecting request for anonymous connection to
+    private address [scrubbed] on a TransPort or NATDPort.  Possible loop in
+    your NAT rules?
 
 TBD:
+- enable tor rc.d at boot
+- basic throttling of uap0 and/or tor network traffic
+- switch have TorDNS and ttdns only listen on 127.0.0.1
+- should get date/time before starting tor
+    - include and run tlsdate after dhcpclient
+    - ntpdate after dhcpclient
+    - use browser trick a la openwrt
+- custom kernel (grsec etc)
+    http://live.debian.net/manual/html/live-manual.en.html#411
+- ipv6 routing on wifi
 - real tor permissions fix
-- remove "auto uap0" from /etc/network/interfaces
 - persistant setuid issue
 - determine which configurations can be settled using debconf preseeds
     http://live.debian.net/manual/html/live-manual.en.html#495
@@ -19,6 +36,11 @@ TBD:
 - remove unnecessary tty2+ lines completely from /etc/inittab
 - ntp.conf
 - faster boots
+    uInitrd load: try removing largest contents, or read uncompressed?
+    /usr/lib/user-setup/user-setup-apply
+    + locale-gen --keep-existing
+    ssh host key generation
     http://www.debian-administration.org/article/Booting_Debian_in_14_seconds
     http://lwn.net/Articles/299483/
 - in dmesg: HOST_CMD_APCMD_POWER_MODE fail=2
+    -> problem with uap0?
