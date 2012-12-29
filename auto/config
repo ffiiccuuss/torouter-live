@@ -3,8 +3,8 @@
 lb config noauto \
     --build-with-chroot false \
     --distribution "torouter" \
-    --architectures armel \
-    --linux-flavours kirkwood \
+    --architectures armhf \
+    --linux-flavours mx5 \
     --apt-secure true \
     --apt-recommends false \
     --binary-images hdd \
@@ -18,10 +18,10 @@ lb config noauto \
     --distribution wheezy \
     --parent-distribution wheezy \
     --binary-filesystem ext3 \
-    --chroot-filesystem squashfs \
+    --chroot-filesystem none \
     --security true \
     --debian-installer-gui false \
-    --bootstrap-qemu-arch armel \
+    --bootstrap-qemu-arch armhf \
     --bootstrap-qemu-static /usr/bin/qemu-arm-static \
     --keyring-packages "debian-archive-keyring deb.torproject.org-keyring" \
     --bootappend-live "console=ttyS0,115200" \

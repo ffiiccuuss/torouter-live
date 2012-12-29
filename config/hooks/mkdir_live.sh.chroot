@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+# Useful to to this here because sometimes /live doesn't get created
+# otherwise...
+echo "Creating /live and copying in boot images..."
+mkdir -p /live
+
