@@ -3,3 +3,5 @@ usbutils
 iperf
 dnsutils
 i2c-tools
+iftop
+iotop
